@@ -18,7 +18,7 @@ export function Register({setUser}) {
         password:password.current.value,
       };
       try {
-        await axios.post("http://localhost:5003/api/user/register",user);
+        await axios.post("https://library-web-backend.onrender.com/api/user/register",user);
         alert('register successfully!');
         navigate('/login');
 
