@@ -1,7 +1,7 @@
 import  { Router } from 'express';
 const router=Router();
 import User from '../model/User.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const cookieOption={
     maxAge:7 * 24 * 60 * 60 * 1000, // for 7days,
