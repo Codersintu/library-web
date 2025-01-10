@@ -25,9 +25,10 @@ app.use(cors({
 async function mongoDB(){
     try {
     await mongoose.connect(process.env.MONGO_URL);
+    
     if (process.env.NODE_ENV !== 'production') {
         console.log('MongoDB is connected');
-    }
+     }
     } catch (error) {
         if (process.env.NODE_ENV !== 'production') {
             console.log('MongoDB not connected:', error);
