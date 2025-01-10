@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router=Router();
-import Form from '../model/form.js';
+import Form from '../model/Form.js';
 import { authorizedRoles, isLoggedIn } from '../middleware/authmiddle.js';
 
 //craete form
