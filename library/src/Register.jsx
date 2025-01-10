@@ -16,7 +16,6 @@ export function Register({setUser}) {
         username:username.current.value,
         email:email.current.value,
         password:password.current.value,
-        role:"ADMIN",
       };
       try {
         await axios.post("http://localhost:5003/api/user/register",user);
