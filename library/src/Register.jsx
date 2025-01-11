@@ -55,7 +55,7 @@ export function Register({setUser}) {
 
         <input ref={password} className="w-full p-2 border border-gray-400 rounded-xl outline-none" type="password" placeholder='password...'/>
 
-        <button type='submit' className=" w-full p-3 mt-5 text-white rounded-full bg-blue-500 "   disabled={isSubmitting}>{isFetching ? <CircularProgress/> : "Register"}</button>
+        <button type='submit' className=" w-full p-3 mt-5 text-white rounded-full bg-blue-500 "   disabled={isFetching}>{isFetching ? <CircularProgress/> : "Register"}</button>
         {errorMessage && (
         <div className="text-red-800 mt-4">{errorMessage}</div>
       )}
