@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
@@ -19,12 +19,12 @@ export function Post(props) {
           const decodedToken = jwt_decode(token);
           const userRole = decodedToken.role;
   
-          if (userRole !== 'ADMIN') {
+          if (userRole !== 'USER') {
             navigate('/'); 
             return;
           }
   
-          const res = await axios.get('https://library-web-backend.onrender.com/api/form/users', {
+          const res = await axios.get('http://localhost:5003/api/form/users', {
             headers: {
               Authorization: `Bearer ${token}`,
             },

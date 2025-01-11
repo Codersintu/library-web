@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -48,15 +47,8 @@ UserSchema.methods={
         }
     );
 },
-comparePassword:  function (plainTextPassword) {
-  try {
-      return  bcrypt.compareSync(plainTextPassword, this.password);
-  } catch (error) {
-      console.error("Error comparing passwords:", error.message);
-      throw new Error("Password comparison failed");
-  }
-},
-}
+
+};
 
 const User= mongoose.models.User || mongoose.model("User", UserSchema);
 export default  User;

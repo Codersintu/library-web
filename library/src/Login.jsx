@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext';
 import { LoginCall } from '../apiCall';
-import { CircularProgress } from "@mui/material"
+import { CircularProgress } from "@mui/material";
 
 export function Login(props) {
   const email=useRef();
@@ -14,8 +14,11 @@ export function Login(props) {
   const handleClick=async(e)=>{
     e.preventDefault();
 
-    if (!email.current.value || !password.current.value) {
-      setErrorMessage('Email and password are required!');
+    if (
+      !email.current.value.trim() ||
+      !password.current.value.trim()
+    ) {
+      setErrorMessage('All fields are required!');
       return;
     }
 
@@ -45,8 +48,9 @@ export function Login(props) {
         {errorMessage && (
           <div className="text-red-500 text-sm mt-2">{errorMessage}</div>
         )}
-      </form>
 
+      </form>
+     
       <button className="registers absolute top-10 right-10 px-5 py-3 bg-lime-500 text-white rounded-lg border-none">
         <Link  to="/register">REGISTER</Link>
       </button>

@@ -21,8 +21,8 @@ router.post('/register',async(req,res)=>{
         if (userExist) {
          return res.status(400).json('email allready exist!');
         };
-        const salt= bcrypt.genSalt(10);
-        const hashPasssword= bcrypt.hashSync(req.body.password,salt);
+        const salt=await bcrypt.genSalt(10);
+        const hashPasssword=await bcrypt.hash(req.body.password,salt);
 
    try {
     const Newuser=await User.create({
@@ -55,10 +55,12 @@ router.post('/login',async(req,res)=>{
         if (!email || !password) {
             return res.status(400).json('email and password are required!');
         };
-        const user=await User.findOne({email}).select("+password").lean();
-        if (!user || !user.comparePassword(password)) {
-            return res.status(400).json('Email and password does not match!');
-        };
+        const user=await User.findOne({email}).select("+password");
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json('Email and password do not match!');
+        }
 
        
         const token=await user.generateJwtToken();

@@ -1,15 +1,16 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import './App.css'
 import { Navbar } from './Navbar'
 import { Home } from './Home'
 import { Feed } from './Feed'
-import {BrowserRouter,Route,Router,Routes,Navigate, useLocation} from 'react-router-dom'
+import {Route,Routes,Navigate, useLocation} from 'react-router-dom'
 import { Register } from './Register'
 import { Post } from './Post'
 import { Login } from './Login'
 import { AuthContext } from '../context/AuthContext'
 
 function App() {
+  const location=useLocation();
   const {state}=useContext(AuthContext);
   const user=state?.user?.user
   return (

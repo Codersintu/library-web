@@ -31,7 +31,7 @@ export function Register({setUser}) {
       };
       try {
       await axios.post(
-        'https://library-web-backend.onrender.com/api/user/register',
+        'http://localhost:5003/api/user/register',
         user,
       );
       alert('Register successfully!');

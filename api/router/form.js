@@ -3,7 +3,7 @@ import Form from '../model/Form.js';
 import { authorizedRoles, isLoggedIn } from '../middleware/authmiddle.js';
 const router=Router();
 
-//craete form
+
 router.post('/create',async(req,res)=>{
     try {
         const {name, mobile, address, seatNo, timeSlot, startDate, endDate } = req.body;
@@ -54,7 +54,6 @@ router.get("/users",isLoggedIn,authorizedRoles("ADMIN") ,async (req, res) => {
         users,
       });
     } catch (err) {
-      console.error("Error fetching users:", err);
       res.status(500).json({
         message: "An error occurred while fetching the users.",
         error: err.message,

@@ -10,7 +10,7 @@ const FormSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique:true,
-    match: /^[0-9]{10}$/, // Validates 10-digit mobile numbers
+    match: /^[0-9]{10}$/, 
   },
   address: {
     type: String,
@@ -21,11 +21,11 @@ const FormSchema = new mongoose.Schema({
     required: true,
     unique:true,
     min: 1,
-    max: 400, // Assuming 40 seats
+    max: 400, 
   },
   isSeatOccupied: {
     type: Boolean,
-    default: false, // Seat is initially unoccupied
+    default: false, 
   },
   timeSlot: {
     type: String,
@@ -36,7 +36,7 @@ const FormSchema = new mongoose.Schema({
       "10 AM - 10 PM",
       "12 PM - 1 PM",
       "1 PM - 2 PM",
-    ], // Ensures valid time slots
+    ], 
   },
   startDate: {
     type: Date,
@@ -47,7 +47,7 @@ const FormSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (value) {
-        return value >= this.startDate; // Ensures endDate is after startDate
+        return value >= this.startDate; 
       },
       message: "End date must be after start date",
     },

@@ -24,6 +24,7 @@ async function mongoDB(){
         console.log('MongoDB is connected');
      }
     } catch (error) {
+        
         if (process.env.NODE_ENV !== 'production') {
             console.log('MongoDB not connected:', error);
         }
@@ -33,7 +34,7 @@ async function mongoDB(){
 mongoDB();
 
 app.use(cors({
-    origin: "https://library-web-backend.onrender.com", 
+    origin: "http://localhost:5173", 
     methods: ["GET", "POST"],
     credentials:true,
   }));
@@ -49,6 +50,7 @@ app.all('*',(req,res)=>{
 
 const PORT=process.env.PORT || 5004
 app.listen(PORT,()=>{
+    
     if (process.env.NODE_ENV !== 'production') {
         console.log(`Server running on http://localhost:${PORT}`);
     }
