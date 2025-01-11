@@ -33,7 +33,7 @@ async function mongoDB(){
 mongoDB();
 
 app.use(cors({
-    origin: "https://library-web-frontend.onrender.com", 
+    origin: "https://library-web-backend.onrender.com", 
     methods: ["GET", "POST"],
     credentials:true,
   }));
