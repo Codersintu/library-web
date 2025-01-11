@@ -1,7 +1,7 @@
 import { Router } from 'express';
-const router=Router();
 import Form from '../model/Form.js';
 import { authorizedRoles, isLoggedIn } from '../middleware/authmiddle.js';
+const router=Router();
 
 //craete form
 router.post('/create',async(req,res)=>{
@@ -10,7 +10,7 @@ router.post('/create',async(req,res)=>{
         if (!name,!mobile || !address || !seatNo || !timeSlot || !startDate || !endDate ) {
           return res.status(400).json('please fill all credentials!');
         };
-        const userExist=await Form.findOne({mobile:req.body.mobile});
+        const userExist=await Form.findOne({mobile:req.body.mobile}).lean();
      
         if (userExist) {
          return res.status(400).json('mobile allready exist!');
@@ -38,7 +38,6 @@ router.post('/create',async(req,res)=>{
           newForm,
         });
       } catch (err) {
-        console.error("Error creating form:", err);
       return  res.status(500).json({
           success:false,
           message: "An error occurred while creating the form.",
@@ -49,7 +48,7 @@ router.post('/create',async(req,res)=>{
 
 router.get("/users",isLoggedIn,authorizedRoles("ADMIN") ,async (req, res) => {
     try {
-      const users = await Form.find();
+      const users = await Form.find().lean();
       res.status(201).json({
         message: "Users fetched successfully",
         users,

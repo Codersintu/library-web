@@ -1,5 +1,4 @@
 import express from  "express" ;
-const app = express();
 import mongoose from  "mongoose" ;
 import morgan from  "morgan";
 import cors from  "cors" ;
@@ -10,17 +9,12 @@ import formRouter from './router/form.js';
 import dotenv from  "dotenv" ;
 dotenv.config();
 
+const app = express();
 app.use(express.json());
-app.use(morgan("common"));
 app.use(cookieParser());
+app.use(morgan("common"));
 app.use(helmet());
 
-
-app.use(cors({
-    origin: "https://library-web-frontend.onrender.com", 
-    methods: ["GET", "POST"],
-    credentials:true,
-  }));
 
 async function mongoDB(){
     try {
@@ -37,6 +31,12 @@ async function mongoDB(){
 
 };
 mongoDB();
+
+app.use(cors({
+    origin: "https://library-web-frontend.onrender.com", 
+    methods: ["GET", "POST"],
+    credentials:true,
+  }));
 
  app.use('/api/user',userRoute)  ;
  app.use('/api/form',formRouter);

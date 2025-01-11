@@ -7,24 +7,41 @@ export function Register({setUser}) {
   const username=useRef();
   const email=useRef();
   const password=useRef();
-    const {user,isFetching,error,dispatch}=useContext(AuthContext);
-    const navigate=useNavigate();
-    const [errorMessage, setErrorMessage] = useState('');
+  const {user,isFetching,error,dispatch}=useContext(AuthContext);
+   const navigate=useNavigate();
+   const [errorMessage, setErrorMessage] = useState('');
+
+
     const handleClick=async(e)=>{
       e.preventDefault();
+
+      if (
+        !username.current.value.trim() ||
+        !email.current.value.trim() ||
+        !password.current.value.trim()
+      ) {
+        setErrorMessage('All fields are required!');
+        return;
+      }
+
       const user={
-        username:username.current.value,
-        email:email.current.value,
-        password:password.current.value,
+        username:username.current.value.trim(),
+        email:email.current.value.trim(),
+        password:password.current.value.trim(),
       };
       try {
-        await axios.post("https://library-web-backend.onrender.com/api/user/register",user);
-        alert('register successfully!');
-        navigate('/login');
-
-      } catch (error) {
-        setErrorMessage(error.response.data.message);
-      };
+      await axios.post(
+        'https://library-web-backend.onrender.com/api/user/register',
+        user,
+      );
+      alert('Register successfully!');
+      setErrorMessage(''); 
+      navigate('/login');
+    } catch (error) {
+      setErrorMessage(
+        error.response?.data?.message || 'Something went wrong. Please try again!'
+      );
+    };
     };
     
     return (
@@ -38,9 +55,12 @@ export function Register({setUser}) {
 
         <input ref={password} className="w-full p-2 border border-gray-400 rounded-xl outline-none" type="password" placeholder='password...'/>
 
-        <button type='submit' className=" w-full p-3 mt-5 text-white rounded-full bg-blue-500 " >Register</button>
+        <button type='submit' className=" w-full p-3 mt-5 text-white rounded-full bg-blue-500 "   disabled={isSubmitting}>{isFetching ? <CircularProgress/> : "Register"}</button>
+        {errorMessage && (
+        <div className="text-red-800 mt-4">{errorMessage}</div>
+      )}
       </form>
-      {errorMessage && <div className="text-red-800 mt-14">{errorMessage}</div>}
+      
 
       <button className="registers absolute top-10 right-10 px-5 py-3 bg-lime-500 text-white rounded-lg border-none">
         <Link  to="/login">Login</Link>

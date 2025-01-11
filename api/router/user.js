@@ -1,12 +1,12 @@
 import  { Router } from 'express';
-const router=Router();
 import User from '../model/User.js';
 import bcrypt from 'bcryptjs';
+const router=Router();
 
 const cookieOption={
-    maxAge:7 * 24 * 60 * 60 * 1000, // for 7days,
-    httpOnly:true,
-    secure:false,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000, 
 };
 
 
@@ -16,13 +16,13 @@ router.post('/register',async(req,res)=>{
         if (!username || !email || !password) {
           return res.status(400).json('please fill all credentials!');
         };
-        const userExist=await User.findOne({email:req.body.email});
+        const userExist=await User.findOne({email:req.body.email}).lean();
      
         if (userExist) {
          return res.status(400).json('email allready exist!');
         };
-        const salt=await bcrypt.genSalt(10);
-        const hashPasssword=await bcrypt.hash(req.body.password,salt);
+        const salt= bcrypt.genSalt(10);
+        const hashPasssword= bcrypt.hashSync(req.body.password,salt);
 
    try {
     const Newuser=await User.create({
@@ -55,7 +55,7 @@ router.post('/login',async(req,res)=>{
         if (!email || !password) {
             return res.status(400).json('email and password are required!');
         };
-        const user=await User.findOne({email}).select("+password");
+        const user=await User.findOne({email}).select("+password").lean();
         if (!user || !user.comparePassword(password)) {
             return res.status(400).json('Email and password does not match!');
         };

@@ -48,9 +48,9 @@ UserSchema.methods={
         }
     );
 },
-comparePassword: async function (plainTextPassword) {
+comparePassword:  function (plainTextPassword) {
   try {
-      return await bcrypt.compare(plainTextPassword, this.password);
+      return  bcrypt.compareSync(plainTextPassword, this.password);
   } catch (error) {
       console.error("Error comparing passwords:", error.message);
       throw new Error("Password comparison failed");
