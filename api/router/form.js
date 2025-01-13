@@ -46,7 +46,7 @@ router.post('/create',async(req,res)=>{
       };
 });
 
-router.get("/users",isLoggedIn,authorizedRoles("ADMIN") ,async (req, res) => {
+router.get("/users",isLoggedIn,authorizedRoles("USER") ,async (req, res) => {
     try {
       const users = await Form.find().lean();
       res.status(201).json({
